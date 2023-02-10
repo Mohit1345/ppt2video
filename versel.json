@@ -1,14 +1,14 @@
 
 {
     "builds": [{
-        "src": "pp2vid/wsgi.py",
+        "src": "ppt2vid/wsgi.py",
         "use": "@vercel/vercel-python-wsgi",
         "config": { "maxLambdaSize": "15mb" }
     }],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "pp2vid/wsgi.py"
+            "dest": "ppt2vid/wsgi.py"
         }
     ]
 }
