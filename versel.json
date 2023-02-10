@@ -1,27 +1,27 @@
-
-
 {
-    "version": 2,
-    "builds": [
-        {
-            "src": "requirements.txt",
-            "use": "@vercel/pip",
-            "config": {
-                "command": "pip install -r requirements.txt"
-            }
-        },
-        {
-            "src": "manage.py",
-            "use": "@vercel/python",
-            "config": {
-                "command": "python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:$PORT"
-            }
-        }
-    ],
-    "routes": [
-        {
-            "src": "(.*)",
-            "dest": "http://localhost:8000$1"
-        }
-    ]
+  "version": 2,
+  "builds": [
+    {
+      "src": "ppt2vid/wsgi.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+    },
+    {
+      "src": "build_files.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles_build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "ppt2vid/wsgi.py"
+    }
+  ]
 }
