@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.home,name="home"),
+    path("/download", views.download_file, name="download_file"),
 ]
 
 if settings.DEBUG:

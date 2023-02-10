@@ -24,6 +24,10 @@ from PyPDF2 import PdfReader,PdfFileReader
 import PyPDF2
 import time
 from sys import exit
+from django.http import FileResponse
+from pptx import Presentation
+
+
 import fitz
 import glob
 import pythoncom
@@ -44,13 +48,14 @@ def home(request):
         print(filename)
 
         # in_file=input("enter the path: ")
-        in_file = f'C:\\Users\\chawl\\Desktop\\final_project\\deploying\\ppt2vid\\media\\{file}'
+        # in_file = f"C:\\Users\\chawl\\Desktop\\final_project\\deploying\\ppt2vid\\media\\{filename}"
+        in_file  = "C:\\Users\\chawl\\Desktop\\final_project\\fin\\ppt2vid\\media\\{}".format(filename)
+        # in_file = "media/ML4curefinal (2).pptx"
         print(in_file)
         out_file = os.path.splitext(in_file)[0]
         pythoncom.CoInitialize()
         powerpoint = win32com.client.Dispatch("Powerpoint.Application")
-        pythoncom.CoInitialize()
-        pdf = powerpoint.Presentations.Open(in_file,WithWindow = False)
+        pdf = powerpoint.Presentations.Open(in_file,ReadOnly=False,WithWindow = False)
         pdf.SaveAs(out_file,32)
         pdf.Close()  
         powerpoint.Quit()
@@ -163,16 +168,22 @@ def home(request):
 
         def final_del():
                 shutil.rmtree(temp)
-        pythoncom.CoUninitialize()
-        pythoncom.CoUninitialize()
+
         important()
         #deleteing temp files generated
         final_del()
 
         # convert the file to video here
+        context = {
+            "video" : in_file
+        }
 
-
-        return render(request, 'home.html', {'filename': filename})
+        return render(request, 'home.html', context)
     return render(request, 'home.html')
 
 
+def download_file(request):
+    # file_path = "/path/to/your/file/{}".format(file_name)
+    response = FileResponse(open("C:\\Users\\chawl\\Desktop\\final_project\\fin\\ppt2vid\\media\\final.mp4", "rb"))
+    response["Content-Disposition"] = "attachment; filename={}".format("final.mp4")
+    return response

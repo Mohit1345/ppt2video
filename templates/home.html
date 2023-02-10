@@ -23,11 +23,14 @@
             <button type="submit">Upload</button>
           </form>
 
-          <h2>video output</h2><br>
-          <video controls>
-            {% comment %} <source src="{% url 'video' filename=filename %}" type="video/mp4"> {% endcomment %}
+          <h2>Download video output</h2><br>
+          <a href='media\final.mp4' download>
+            <button type="button">Download</button></a>
+          
+          {% comment %} <video controls>
+            <source src="{{video}}" type="video/mp4" height="500px" width="800px">
             Your browser does not support the video tag.
-          </video>
+          </video> {% endcomment %}
           
         <script src="" async defer></script>
     </body>
